@@ -1,0 +1,24 @@
+A narrativa é baseada em um mundo controlado pelas máquinas, onde a
+
+humanidade é mantida aprisionada em casulos e submetida a um estado de sono
+
+profundo, enquanto são utilizados como baterias para alimentar os autômatos
+
+Index:
+Narrativa - 1
+Baseada - 1
+Mundo - 1
+Controlado - 1
+Máquinas - 1
+Humanidade - 1
+Mantida - 1
+Aprisionada - 1
+Casulos - 1
+Submetida - 1
+Estado - 1
+Profundo - 1
+Enquanto - 1
+Utilizados - 1
+Baterias - 1
+Alimentar - 1
+Autômatos - 1

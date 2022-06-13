@@ -1,0 +1,7 @@
+banco banco banco banco banco banco banco banco 
+cadeira cadeira cadeira cadeira cadeira
+mesa mesa mesa mesa mesa mesa mesa
+
+8 - banco
+5 - cadeira
+7 - mesa

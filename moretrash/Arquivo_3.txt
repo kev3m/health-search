@@ -1,0 +1,5 @@
+Panela Panela Panela Panela Panela Panela Panela Panela
+Garfo Garfo Garfo Garfo Garfo
+
+Panela : 9
+Garfo : 6
