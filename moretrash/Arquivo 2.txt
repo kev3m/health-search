@@ -1,4 +1,4 @@
-Nome: João 
+Nome do paciente: João 
 Cpf: 12345678
 Diagnóstico: Dengue 
 Idade: 70 anos
