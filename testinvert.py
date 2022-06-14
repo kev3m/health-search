@@ -1,8 +1,47 @@
 import os
 import sys
 
+'''indicando um diretório ou um arquivo específico. O
+sistema também deve efetuar a busca de documentos
+a partir de uma palavra (termo), indicando todos os
+documentos que contêm aquela palavra e quantas
+vezes a palavra ocorre no documento, além de
+informar a quantidade de documentos encontrados.
+'''
+def percorrerArquivos(path):
+    dirs = []
+    for diretorio, subpastas, arquivos in os.walk(path):
+        for arquivo in arquivos:
+            if arquivo.endswith('.txt') == True: 
+                # print(os.path.join(diretorio, arquivo))
+                dirs.append(os.path.join(os.path.realpath(diretorio), arquivo))
+    return dirs
 
-path = os.getcwd()
-dirList = os.listdir(path) 
+def indexinvertido(termo,diretorio):
+    diretoriosencontrados = []
+    counter = 0
+    for diretorio in dirs:
+        #contador de vezes que a palavra ocorre
+        with open(diretorio, 'r', encoding="utf8") as arquivo:
+            for linha in arquivo:
+                linhalower = linha.lower()
+                if termo in linhalower:
+                    counter += linhalower.count(termo)
+                    diretoriosencontrados.append(diretorio)
+                    # print(termo,counter, diretorio)
+    return counter,diretoriosencontrados
 
-with open(path, 'r') as caminho
+
+pasta = os.getcwd()
+#lista de diretórios
+dirs = percorrerArquivos(pasta)
+# dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
+
+# for x in dirs:
+#     print(x)
+
+termo = input('digite o termo a ser buscado:').lower()
+
+contador, listadedirs = indexinvertido(termo, dirs)
+print(contador)
+print(listadedirs)
