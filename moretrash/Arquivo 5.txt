@@ -5,6 +5,6 @@ Nascimento: 25/02/1980
 PRONTUÁRIO DO PACIENTE
 Número do prontuário: 9210
 Escolaridade: Ensino Médio completo
-
+CPF Cpf CPF 
 
 

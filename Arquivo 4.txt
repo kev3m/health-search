@@ -5,3 +5,4 @@ Idade do Paciente: 28 anos
 Exame realizado: Ressonância Magnética 
 Método: Exame realizado nas diversas sequências 
 Análise: Estrutura óssea com morfologia e sinais normais.
+CPF Cpf CPF Cpf CPF Cpf

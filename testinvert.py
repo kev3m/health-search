@@ -18,9 +18,11 @@ def percorrerArquivos(path):
     return dirs
 
 def indexinvertido(termo,diretorio):
+    dicio = {}
+    dicio[termo] = {}
     diretoriosencontrados = []
-    counter = 0
     for diretorio in dirs:
+        counter = 0
         #contador de vezes que a palavra ocorre
         with open(diretorio, 'r', encoding="utf8") as arquivo:
             for linha in arquivo:
@@ -29,7 +31,8 @@ def indexinvertido(termo,diretorio):
                     counter += linhalower.count(termo)
                     diretoriosencontrados.append(diretorio)
                     # print(termo,counter, diretorio)
-    return counter,diretoriosencontrados
+                    dicio[termo].update({diretorio: counter})
+    return dicio
 
 
 pasta = os.getcwd()
@@ -41,7 +44,10 @@ dirs = percorrerArquivos(pasta)
 #     print(x)
 
 termo = input('digite o termo a ser buscado:').lower()
-
-contador, listadedirs = indexinvertido(termo, dirs)
-print(contador)
-print(listadedirs)
+dicion = indexinvertido(termo, dirs)
+for i in dicion:
+    print(i)
+    #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
+    #lambda = função anônima 
+    for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
+        print(f'Arquivo:{j[0]} | Ocorrências {j[1]}')
