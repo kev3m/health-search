@@ -6,5 +6,5 @@ PRONTUÁRIO DO PACIENTE
 Número do prontuário: 9210
 Escolaridade: Ensino Médio completo
 CPF Cpf CPF 
-
+cpf
 
