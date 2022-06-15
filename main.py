@@ -1,6 +1,6 @@
 import os
 import sys
-from testinvert import percorrerArquivos, indexinvertido
+# from testinvert import percorrerArquivos, indexinvertido
 
 def listDir(path):
     path = os.listdir()
@@ -49,5 +49,8 @@ elif len (sys.argv) == 3:
         for i in dirList:
             if i.endswith(".txt") == True:
                 print(i)
+    elif command == '/addindex' and os.path.isdir(command2) == True:
+        with open('cache.ignore', 'w') as cache:
+            cache.write(command)
 
 

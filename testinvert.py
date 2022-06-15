@@ -35,20 +35,20 @@ def indexinvertido(termo,diretorio):
     return dicio
 
 
-# pasta = input('digita o dir: ')
-# #lista de diretórios
-# dirs = percorrerArquivos(pasta)
-# print(dirs)
-# # dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
+pasta = input('digita o dir: ')
+#lista de diretórios
+dirs = percorrerArquivos(pasta)
+print(dirs)
+# dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
 
-# # for x in dirs:
-# #     print(x)
+# for x in dirs:
+#     print(x)
 
-# termo = input('digite o termo a ser buscado:').lower()
-# dicion = indexinvertido(termo, dirs)
-# for i in dicion:
-#     print(f'Termo buscado: {i}')
-#     #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
-#     #lambda = função anônima 
-#     for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
-#         print(f'Filename: {j[0]} | Ocorrências: {j[1]}')
+termo = input('digite o termo a ser buscado:').lower()
+dicion = indexinvertido(termo, dirs)
+for i in dicion:
+    print(f'Termo buscado: {i}')
+    #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
+    #lambda = função anônima 
+    for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
+        print(f'Filename: {j[0]} | Ocorrências: {j[1]}')
