@@ -97,17 +97,19 @@ elif len (sys.argv) == 3:
                     cache.write('\n')
     elif command == '/search' and command2 != None:
         with open('cache.ignore', 'r') as cache:
-            dicio = []
+            directorydict = []
             for line in cache:
-                dicio.append(line)
-            print(dicio)
-            # searchtermindex = indexinvertido(command2, dicio)
-            # for i in searchtermindex:
-            #     print(f'Termo buscado: {i}')
-            #     #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
-            #     #lambda = função anônima 
-            #     for j in sorted(searchtermindex[i].items(), key=lambda dicio: dicio[1], reverse=True):
-            #         print(f'Filename: {j[0]} | Ocorrências: {j[1]}')
+                #rstrip retira caracteres de controle
+                caminho = line.rstrip()
+                directorydict.append(caminho)
+            dicion = indexinvertido(command2, directorydict)
+            for i in dicion:
+                print(f'Termo buscado: {i}')
+                #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
+                #lambda = função anônima 
+                for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
+                    print(f'Nome do arquivo: {j[0]} | Ocorrências: {j[1]}')
+
 
 
         #verificar se é um caminho válido
