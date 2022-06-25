@@ -30,8 +30,7 @@ def indexinvertido(termo,dictdir):
                 if termo in linhalower:
                     counter += linhalower.count(termo)
                     diretoriosencontrados.append(diretorio)
-                    basename = os.path.basename(diretorio)
-                    dicio[termo].update({basename: counter})
+                    dicio[termo].update({diretorio: counter})
     return dicio
 
 def listDir(path):
@@ -108,7 +107,7 @@ elif len (sys.argv) == 3:
                 #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
                 #lambda = função anônima 
                 for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
-                    print(f'Nome do arquivo: {j[0]} | Ocorrências: {j[1]}')
+                    print(f'Caminho do arquivo: {j[0]} | Ocorrências: {j[1]}')
 
 
 

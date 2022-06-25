@@ -1,6 +1,10 @@
 import os
 import sys
-
+stopwordslist = []
+with open('stopwords.ignore', 'r') as stopwords:
+    for linha in stopwords:
+     word = linha.rstrip()
+     stopwordslist.append(word)
 '''indicando um diretório ou um arquivo específico. O
 sistema também deve efetuar a busca de documentos
 a partir de uma palavra (termo), indicando todos os
@@ -36,29 +40,32 @@ def indexinvertido(termo,dictdir):
                 if termo in linhalower:
                     counter += linhalower.count(termo)
                     diretoriosencontrados.append(diretorio)
-                    basename = os.path.basename(diretorio)
-                    dicio[termo].update({basename: counter})
+                    dicio[termo].update({diretorio: counter})
     return dicio
 
-def visualizarIndex(diretorio):
-    if os.path.isfile(diretorio) == True:
-        dicio = {}
-        for linha in diretorio:
-            # linha = linha.strip()
-            linha = linha.lower()
-            palavras = linha.split(" ")
-            for word in palavras:
-                if word in dicio:
-                    dicio[word] += 1
-                else:
-                    dicio[word] = 1
-        return dicio
+def visualizarIndex(diretorio,stopwords):
+    
+    for fileindex in diretorio:
+        if os.path.isfile(fileindex) == True:
+            with open(fileindex, 'r', encoding='utf-8') as diret:
+                dicio = {}
+                for linha in diret:
+                    linha = linha.rstrip()
+                    linha = linha.lower()
+                    palavras = linha.split(" ")
+                    for word in palavras:
+                        if word not in stopwords:
+                            if word in dicio:
+                                dicio[word] += 1
+                            else:
+                                dicio[word] = 1
+    return dicio
 
 
 pasta = input('digita o dir: ')
 #lista de diretórios
 dirs = percorrerArquivos(pasta)
-viewindex = visualizarIndex(pasta)
+viewindex = visualizarIndex(pasta,stopwordslist)
 print(viewindex)
 print(dirs)
 # dicio = {'termo': {'filename.txt': 'quantpalavras'  } }

@@ -45,27 +45,31 @@ import os
 #             cache.write(index)
 #             cache.write('\n')
 
-def percorrerArquivos(path):
-    indexdirs = []
-    filesdirs= []
-    if os.path.isfile(path) == True:
-        filesdirs.append(path)
-    else:
-        for dirs in os.walk(path):
-            '''RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR '''
-            if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
-                pass
-            else:
-                print(dirs[0])
-                indexdirs.append(dirs[0])
-        for index in indexdirs:         
-            for diretorio, subpastas, arquivos in os.walk(index):
-                for arquivo in arquivos:
-                    if arquivo.endswith('.txt') == True:
-                        print(os.path.join(diretorio, arquivo))
-                        filesdirs.append(os.path.join(diretorio, arquivo))
-    return filesdirs
+# def percorrerArquivos(path):
+#     indexdirs = []
+#     filesdirs= []
+#     if os.path.isfile(path) == True:
+#         filesdirs.append(path)
+#     else:
+#         for dirs in os.walk(path):
+#             '''RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR '''
+#             if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
+#                 pass
+#             else:
+#                 print(dirs[0])
+#                 indexdirs.append(dirs[0])
+#         for index in indexdirs:         
+#             for diretorio, subpastas, arquivos in os.walk(index):
+#                 for arquivo in arquivos:
+#                     if arquivo.endswith('.txt') == True:
+#                         print(os.path.join(diretorio, arquivo))
+#                         filesdirs.append(os.path.join(diretorio, arquivo))
+#     return filesdirs
 
-path = 'C:\\Users\Keven\Desktop\FOOCUS P\pbl - mi 3\moretrash\Arquivo 2.txt'
-print(percorrerArquivos(path))
-# print(filesdirs)
+# path = 'C:\\Users\Keven\Desktop\FOOCUS P\pbl - mi 3\moretrash\Arquivo 2.txt'
+# print(percorrerArquivos(path))
+# # print(filesdirs)
+
+string = 'i love: - banana'
+newstring = string.rstrip(':,-')
+print(newstring)
