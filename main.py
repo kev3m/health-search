@@ -1,6 +1,24 @@
 import os
 import sys
-# from testinvert import percorrerArquivos, indexinvertido
+# from testinvert import percorrerArquivos
+
+def percorrerArquivos(path):
+    indexdirs = []
+    filesdirs= []
+    for dirs in os.walk(path):
+        '''RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR '''
+        if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
+             pass
+        else:
+            print(dirs[0])
+            indexdirs.append(dirs[0])
+    for index in indexdirs:         
+        for diretorio, subpastas, arquivos in os.walk(index):
+            for arquivo in arquivos:
+                if arquivo.endswith('.txt') == True:
+                    print(os.path.join(diretorio, arquivo))
+                    filesdirs.append(os.path.join(diretorio, arquivo))
+    return filesdirs
 
 def listDir(path):
     path = os.listdir()
@@ -28,7 +46,7 @@ if command == '/help':
 
 /search <term> [Busca documentos apartir de uma palavra]
 
-/tes
+/viewindex <path>
     ''')
 
 path = os.getcwd()
@@ -40,7 +58,10 @@ if len (sys.argv) == 2:
         print(dirList) 
     elif command == '/addindex':
         path = os.getcwd()
-        print('O diretório principal foi adiconado.')
+        print(path)
+        with open('cache.ignore', 'w') as cache:
+            cache.write(path)
+        print('O diretório principal foi adicionado.')
     elif command == '/search':
         print('Efetue a busca utilizando /search <termo>')    
 elif len (sys.argv) == 3: 
@@ -49,8 +70,20 @@ elif len (sys.argv) == 3:
         for i in dirList:
             if i.endswith(".txt") == True:
                 print(i)
-    elif command == '/addindex' and os.path.isdir(command2) == True:
+    elif command == '/addindex' and command2 != None:
         with open('cache.ignore', 'w') as cache:
-            cache.write(command)
+            if os.path.isfile(command2) == True:
+                cache.write(command2)
+                print(f'O indíce de arquivo {command2} foi adicionado')
+            else: 
+                dicio = percorrerArquivos(command2)
+                print(f'O indíce de diretório {command2} foi adicionado')
+                for index in dicio:
+                    cache.write(index)
+                    cache.write('\n')
 
+        #verificar se é um caminho válido
+
+         
+        
 

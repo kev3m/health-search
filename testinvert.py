@@ -9,13 +9,22 @@ vezes a palavra ocorre no documento, além de
 informar a quantidade de documentos encontrados.
 '''
 def percorrerArquivos(path):
-    dirs = []
-    for diretorio, arquivos in os.walk(path):
-        for arquivo in arquivos:
-            if arquivo.endswith('.txt') == True: 
-                # print(os.path.join(diretorio, arquivo))
-                dirs.append(os.path.join(os.path.realpath(diretorio), arquivo))
-    return dirs
+    indexdirs = []
+    filesdirs= []
+    for dirs in os.walk(path):
+        '''RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR '''
+        if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
+             pass
+        else:
+            print(dirs[0])
+            indexdirs.append(dirs[0])
+    for index in indexdirs:         
+        for diretorio, subpastas, arquivos in os.walk(index):
+            for arquivo in arquivos:
+                if arquivo.endswith('.txt') == True:
+                    print(os.path.join(diretorio, arquivo))
+                    filesdirs.append(os.path.join(diretorio, arquivo))
+    return filesdirs
 
 def indexinvertido(termo,diretorio):
     dicio = {}
@@ -34,10 +43,26 @@ def indexinvertido(termo,diretorio):
                     dicio[termo].update({basename: counter})
     return dicio
 
+def visualizarIndex(diretorio):
+    if os.path.isfile(diretorio) == True:
+        dicio = {}
+        for linha in diretorio:
+            # linha = linha.strip()
+            linha = linha.lower()
+            palavras = linha.split(" ")
+            for word in palavras:
+                if word in dicio:
+                    dicio[word] += 1
+                else:
+                    dicio[word] = 1
+        return dicio
+
 
 pasta = input('digita o dir: ')
 #lista de diretórios
 dirs = percorrerArquivos(pasta)
+viewindex = visualizarIndex(pasta)
+print(viewindex)
 print(dirs)
 # dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
 
