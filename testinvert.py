@@ -16,21 +16,18 @@ def percorrerArquivos(path):
         if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
              pass
         else:
-            print(dirs[0])
-            indexdirs.append(dirs[0])
-    for index in indexdirs:         
-        for diretorio, subpastas, arquivos in os.walk(index):
-            for arquivo in arquivos:
-                if arquivo.endswith('.txt') == True:
-                    print(os.path.join(diretorio, arquivo))
-                    filesdirs.append(os.path.join(diretorio, arquivo))
+            indexdirs.append(dirs[0])        
+    for diretorio, subpastas, arquivos in os.walk(path):
+        for arquivo in arquivos:
+            if arquivo.endswith('.txt') == True:
+                filesdirs.append(os.path.join(diretorio, arquivo))
     return filesdirs
 
-def indexinvertido(termo,diretorio):
+def indexinvertido(termo,dictdir):
     dicio = {}
     dicio[termo] = {}
     diretoriosencontrados = []
-    for diretorio in dirs:
+    for diretorio in dictdir:
         counter = 0
         #contador de vezes que a palavra ocorre
         with open(diretorio, 'r', encoding="utf8") as arquivo:

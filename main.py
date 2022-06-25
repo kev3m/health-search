@@ -10,15 +10,29 @@ def percorrerArquivos(path):
         if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
              pass
         else:
-            print(dirs[0])
-            indexdirs.append(dirs[0])
-    for index in indexdirs:         
-        for diretorio, subpastas, arquivos in os.walk(index):
-            for arquivo in arquivos:
-                if arquivo.endswith('.txt') == True:
-                    print(os.path.join(diretorio, arquivo))
-                    filesdirs.append(os.path.join(diretorio, arquivo))
+            indexdirs.append(dirs[0])       
+    for diretorio, subpastas, arquivos in os.walk(path):
+        for arquivo in arquivos:
+            if arquivo.endswith('.txt') == True:
+                filesdirs.append(os.path.join(diretorio, arquivo))
     return filesdirs
+
+def indexinvertido(termo,dictdir):
+    dicio = {}
+    dicio[termo] = {}
+    diretoriosencontrados = []
+    for diretorio in dictdir:
+        counter = 0
+        #contador de vezes que a palavra ocorre
+        with open(diretorio, 'r', encoding="utf8") as arquivo:
+            for linha in arquivo:
+                linhalower = linha.lower()
+                if termo in linhalower:
+                    counter += linhalower.count(termo)
+                    diretoriosencontrados.append(diretorio)
+                    basename = os.path.basename(diretorio)
+                    dicio[termo].update({basename: counter})
+    return dicio
 
 def listDir(path):
     path = os.listdir()
@@ -30,10 +44,10 @@ Para verificar a lista de comandos digite <nomedoarquivo> /help''')
     sys.exit()
 elif len (sys.argv) == 3:
     command2 = sys.argv[2]
-    print(command2)
+
 
 command = sys.argv[1]
-print(command)
+
 
 if command == '/help':
     print('''A lista de comandos é:
@@ -81,6 +95,20 @@ elif len (sys.argv) == 3:
                 for index in dicio:
                     cache.write(index)
                     cache.write('\n')
+    elif command == '/search' and command2 != None:
+        with open('cache.ignore', 'r') as cache:
+            dicio = []
+            for line in cache:
+                dicio.append(line)
+            print(dicio)
+            # searchtermindex = indexinvertido(command2, dicio)
+            # for i in searchtermindex:
+            #     print(f'Termo buscado: {i}')
+            #     #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
+            #     #lambda = função anônima 
+            #     for j in sorted(searchtermindex[i].items(), key=lambda dicio: dicio[1], reverse=True):
+            #         print(f'Filename: {j[0]} | Ocorrências: {j[1]}')
+
 
         #verificar se é um caminho válido
 
