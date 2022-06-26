@@ -58,7 +58,7 @@ def visualizarIndex(diretorio,stopwords):
                             if word in dicio:
                                 dicio[word] += 1
                             else:
-                                dicio[word] = 1
+                                dicio[word] = 1             
         viewindexdicio[fileindex] = dicio
     return viewindexdicio
 

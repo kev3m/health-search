@@ -118,15 +118,15 @@ elif len (sys.argv) == 3:
                 cacheindexes = cacheread.readlines()
 
             with open('cache.ignore', 'w') as cache:    
-                for linha in cacheindexes:
+                for linha in cacheindexes:     
                     if linha.startswith(command2) == True:
-                        pass
+                        removedaux = True
                     else:
                         cache.write(linha)
-
-            print('Index removido com sucesso!')
+            if removedaux == True:
+                print(f'O índice {command2} foi removido com sucesso!')
         except:
-            print('Index não encontrado!')        
+            print('Houve um erro! Não foi possivel localizar e remover o índice')        
 
 
 
