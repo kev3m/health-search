@@ -70,6 +70,6 @@ import os
 # print(percorrerArquivos(path))
 # # print(filesdirs)
 
-string = 'i love: - banana'
-newstring = string.rstrip(':,-')
-print(newstring)
+dicio = {'chave': 5, 'ok':1, 'salve': 3, 'shawty':8, 'aaa':4}
+newdicio = sorted(dicio, key = dicio.get)
+print(newdicio)

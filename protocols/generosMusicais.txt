@@ -1,9 +1,0 @@
-mpb mpb mpb mpb mpb mpb mpb mpb mpb mpb
-pagode pagode pagode pagode
-sertanejo sertanejo sertanejo sertanejo sertanejo sertanejo
-rock rock rock
-
-10 - mpb
-4 - pagode
-6 - sertanejo
-3 - rock

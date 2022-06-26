@@ -1,7 +1,0 @@
-Cachorro Cachorro Cachorro Cachorro Cachorro Cachorro Cachorro
-Gamba Gamba Gamba Gamba
-Cobra Cobra Cobra Cobra
-
-Cachorro : 8
-Gamba : 5
-Cobra : 5

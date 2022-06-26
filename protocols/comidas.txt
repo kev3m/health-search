@@ -1,8 +1,0 @@
-pizza pizza pizza pizza pizza pizza
-lasanha lasanha lasanha lasanha lasanha lasanha
-strogonoff strogonoff strogonoff strogonoff strogonoff strogonoff strogonoff strogonoff 
-
-6 - pizza
-6 - lasanha
-8 - strogonoff
-0 - filé

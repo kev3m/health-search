@@ -44,7 +44,7 @@ def indexinvertido(termo,dictdir):
     return dicio
 
 def visualizarIndex(diretorio,stopwords):
-    
+    viewindexdicio = {}
     for fileindex in diretorio:
         if os.path.isfile(fileindex) == True:
             with open(fileindex, 'r', encoding='utf-8') as diret:
@@ -59,15 +59,18 @@ def visualizarIndex(diretorio,stopwords):
                                 dicio[word] += 1
                             else:
                                 dicio[word] = 1
-    return dicio
+        viewindexdicio[fileindex] = dicio
+    return viewindexdicio
 
 
 pasta = input('digita o dir: ')
 #lista de diretórios
 dirs = percorrerArquivos(pasta)
-viewindex = visualizarIndex(pasta,stopwordslist)
-print(viewindex)
-print(dirs)
+viewindex = visualizarIndex(dirs,stopwordslist)
+for i in viewindex.items():
+    print(i)
+# print(viewindex)
+# print(dirs)
 # dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
 
 # for x in dirs:

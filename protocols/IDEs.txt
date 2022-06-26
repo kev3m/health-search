@@ -1,7 +1,0 @@
-vscode vscode vscode vscode vscode vscode vscode vscode vscode vscode vscode vscode 
-pycharm pycharm
-sublime sublime sublime sublime sublime sublime sublime
-
-12 - vscode
-2 - pycharm
-7 - sublime

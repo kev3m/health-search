@@ -55,7 +55,9 @@ if command == '/help':
  |------> /listdir -files [Lista todos os arquivos no diretório principal]
 
 /addindex  [Adiciona o diretório principal]
- |------> /addindex <diretorio> [Adiciona o diretório indicado]
+ |------> /addindex <index> [Adiciona o índice indicado]
+
+/removeindex <index> [Remove o índice indicado]
 
 /search <term> [Busca documentos apartir de uma palavra]
 
@@ -76,7 +78,9 @@ if len (sys.argv) == 2:
             cache.write(path)
         print('O diretório principal foi adicionado.')
     elif command == '/search':
-        print('Efetue a busca utilizando /search <termo>')    
+        print('Efetue a busca utilizando /search <termo>')
+    elif command == '/removeindex':
+         print('Efetue a remocão do índice utilizando /removeindex <path')   
 elif len (sys.argv) == 3: 
     if command == '/listdir' and command2 == '-files':
         print(f'Os arquivos de texto presentes no diretório {path}:')
@@ -108,6 +112,22 @@ elif len (sys.argv) == 3:
                 #lambda = função anônima 
                 for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
                     print(f'Caminho do arquivo: {j[0]} | Ocorrências: {j[1]}')
+    elif command == '/removeindex' and command2 != None:
+        try:
+            with open('cache.ignore', 'r') as cacheread:
+                cacheindexes = cacheread.readlines()
+
+            with open('cache.ignore', 'w') as cache:    
+                for linha in cacheindexes:
+                    if linha.startswith(command2) == True:
+                        pass
+                    else:
+                        cache.write(linha)
+
+            print('Index removido com sucesso!')
+        except:
+            print('Index não encontrado!')        
+
 
 
 

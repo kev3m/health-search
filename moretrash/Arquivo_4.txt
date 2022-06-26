@@ -1,7 +1,0 @@
-Carro Carro Carro Carro Carro
-Caminhão Caminhão Caminhão Caminhão
-Moto Moto Moto Moto Moto Moto Moto
-
-Carro : 6
-Caminhão : 5
-Moto : 8
