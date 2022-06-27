@@ -1,17 +1,5 @@
 import os
-import sys
-stopwordslist = []
-with open('stopwords.ignore', 'r') as stopwords:
-    for linha in stopwords:
-     word = linha.rstrip()
-     stopwordslist.append(word)
-'''indicando um diretório ou um arquivo específico. O
-sistema também deve efetuar a busca de documentos
-a partir de uma palavra (termo), indicando todos os
-documentos que contêm aquela palavra e quantas
-vezes a palavra ocorre no documento, além de
-informar a quantidade de documentos encontrados.
-'''
+
 def percorrerArquivos(path):
     indexdirs = []
     filesdirs= []
@@ -20,7 +8,7 @@ def percorrerArquivos(path):
         if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
              pass
         else:
-            indexdirs.append(dirs[0])        
+            indexdirs.append(dirs[0])       
     for diretorio, subpastas, arquivos in os.walk(path):
         for arquivo in arquivos:
             if arquivo.endswith('.txt') == True:
@@ -43,6 +31,10 @@ def indexinvertido(termo,dictdir):
                     dicio[termo].update({diretorio: counter})
     return dicio
 
+def listDir(path):
+    path = os.listdir()
+    print(path)
+
 def visualizarIndex(diretorio,stopwords):
     viewindexdicio = {}
     for fileindex in diretorio:
@@ -53,37 +45,12 @@ def visualizarIndex(diretorio,stopwords):
                     linha = linha.rstrip()
                     linha = linha.lower()
                     palavras = linha.split(" ")
-                    for word in palavras:
+                    for palavra in palavras:
+                        word = palavra.strip(",.:?!'~;/*$#@\"")
                         if word not in stopwords:
                             if word in dicio:
                                 dicio[word] += 1
                             else:
                                 dicio[word] = 1             
         viewindexdicio[fileindex] = dicio
-    return viewindexdicio
-
-
-pasta = input('digita o dir: ')
-#lista de diretórios
-dirs = percorrerArquivos(pasta)
-viewindex = visualizarIndex(dirs,stopwordslist)
-for chave in viewindex.keys():
-    print(f'Visualizando o índice: {chave}')
-    for j in sorted(viewindex[chave].items(), key=lambda dicio: dicio[1], reverse=True):
-        print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
-    print('\n')
-# print(viewindex)
-# print(dirs)
-# dicio = {'termo': {'filename.txt': 'quantpalavras'  } }
-
-# for x in dirs:
-#     print(x)
-
-termo = input('digite o termo a ser buscado:').lower()
-dicion = indexinvertido(termo, dirs)
-for i in dicion:
-    print(f'Termo buscado: {i}')
-    #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
-    #lambda = função anônima 
-    for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
-        print(f'Filename: {j[0]} | Ocorrências: {j[1]}')
+    return viewindexdicio    

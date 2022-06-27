@@ -70,6 +70,20 @@ import os
 # print(percorrerArquivos(path))
 # # print(filesdirs)
 
-dicio = {'chave': 5, 'ok':1, 'salve': 3, 'shawty':8, 'aaa':4}
-newdicio = sorted(dicio, key = dicio.get)
-print(newdicio)
+# dicio = {}
+# for chave in dicio.keys():
+#     print(f'Visualizando o índice: {chave}')
+#     for j in sorted(dicio[chave].items(), key=lambda dicio: dicio[1], reverse=True):
+#         print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
+#     print('\n')
+import time 
+path = r"C:\\Users\Keven\Desktop\arquivos\test.txt"
+ti_c = str(os.path.getctime(path))
+ti_m = os.path.getmtime(path) 
+# c_ti = time.ctime(ti_c) 
+# m_ti = time.ctime(ti_m) 
+print(ti_c, ti_m)
+  
+# print( 
+#     f'''The file located at the path {path} 
+#     was created at {c_ti} and was last modified at {m_ti}''') 

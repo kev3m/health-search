@@ -1,41 +1,7 @@
 import os
 import sys
-# from testinvert import percorrerArquivos
+from functions import percorrerArquivos, indexinvertido, listDir, visualizarIndex
 
-def percorrerArquivos(path):
-    indexdirs = []
-    filesdirs= []
-    for dirs in os.walk(path):
-        '''RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR RETIRAR '''
-        if dirs[0].startswith('C:\\Users\\Keven\\Desktop\\FOOCUS P\\pbl - mi 3\\.git'):    
-             pass
-        else:
-            indexdirs.append(dirs[0])       
-    for diretorio, subpastas, arquivos in os.walk(path):
-        for arquivo in arquivos:
-            if arquivo.endswith('.txt') == True:
-                filesdirs.append(os.path.join(diretorio, arquivo))
-    return filesdirs
-
-def indexinvertido(termo,dictdir):
-    dicio = {}
-    dicio[termo] = {}
-    diretoriosencontrados = []
-    for diretorio in dictdir:
-        counter = 0
-        #contador de vezes que a palavra ocorre
-        with open(diretorio, 'r', encoding="utf8") as arquivo:
-            for linha in arquivo:
-                linhalower = linha.lower()
-                if termo in linhalower:
-                    counter += linhalower.count(termo)
-                    diretoriosencontrados.append(diretorio)
-                    dicio[termo].update({diretorio: counter})
-    return dicio
-
-def listDir(path):
-    path = os.listdir()
-    print(path)
 
 if len (sys.argv) < 2 :
     print (''' 
@@ -59,13 +25,21 @@ if command == '/help':
 
 /removeindex <index> [Remove o índice indicado]
 
-/search <term> [Busca documentos apartir de uma palavra]
+/search <term> [Busca a ocorrência]
 
 /viewindex <path>
+
+/updateindex <path>
     ''')
 
 path = os.getcwd()
 dirList = os.listdir(path) 
+
+stopwordslist = []
+with open('stopwords.ignore', 'r') as stopwords:
+    for linha in stopwords:
+     word = linha.rstrip()
+     stopwordslist.append(word)
 
 if len (sys.argv) == 2:
     if command == '/listdir':
@@ -80,7 +54,20 @@ if len (sys.argv) == 2:
     elif command == '/search':
         print('Efetue a busca utilizando /search <termo>')
     elif command == '/removeindex':
-         print('Efetue a remocão do índice utilizando /removeindex <path')   
+         print('Efetue a remocão do índice utilizando /removeindex <path')
+    elif command == '/viewindex':
+        with open('cache.ignore', 'r') as cache:
+            directorydict = []
+            for line in cache:
+                #rstrip retira caracteres de controle
+                caminho = line.rstrip()
+                directorydict.append(caminho)
+        viewindex = visualizarIndex(directorydict,stopwordslist)
+        for chave in viewindex.keys():
+            print(f'Visualizando o índice: {chave}')
+            for j in sorted(viewindex[chave].items(), key=lambda dicio: dicio[1], reverse=True):
+                print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
+            print('\n')
 elif len (sys.argv) == 3: 
     if command == '/listdir' and command2 == '-files':
         print(f'Os arquivos de texto presentes no diretório {path}:')
@@ -88,16 +75,18 @@ elif len (sys.argv) == 3:
             if i.endswith(".txt") == True:
                 print(i)
     elif command == '/addindex' and command2 != None:
-        with open('cache.ignore', 'w') as cache:
+        with open('cache.ignore', 'w') as cache, open('indexupdate.ignore', 'w') as indexupdate:
             if os.path.isfile(command2) == True:
                 cache.write(command2)
-                print(f'O indíce de arquivo {command2} foi adicionado')
+                print(f'O indíce de arquivo {command2} foi adicionado!')
             else: 
                 dicio = percorrerArquivos(command2)
-                print(f'O indíce de diretório {command2} foi adicionado')
+                print(f'O indíce de diretório {command2} foi adicionado!')
                 for index in dicio:
                     cache.write(index)
                     cache.write('\n')
+                    indexupdate.write(str(os.path.getmtime(index)))
+                    indexupdate.write('\n')
     elif command == '/search' and command2 != None:
         with open('cache.ignore', 'r') as cache:
             directorydict = []
@@ -108,6 +97,7 @@ elif len (sys.argv) == 3:
             dicion = indexinvertido(command2, directorydict)
             for i in dicion:
                 print(f'Termo buscado: {i}')
+                print(f'Quantidade de arquivos encontrados: {len(dicion[command2])}')
                 #sorted(iterable, key=key(parametro de comparação), reverse=reverse)
                 #lambda = função anônima 
                 for j in sorted(dicion[i].items(), key=lambda dicio: dicio[1], reverse=True):
