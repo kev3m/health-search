@@ -1,6 +1,6 @@
 import os
 import sys
-from functions import percorrerArquivos, indexinvertido, listDir, visualizarIndex
+from functions import showHelp,percorrerArquivos, indexinvertido, listDir, visualizarIndex, generateStopWordsList, getOldIndexUpdate, rewriteIndexUpdate
 
 
 if len (sys.argv) < 2 :
@@ -10,47 +10,21 @@ Para verificar a lista de comandos digite <nomedoarquivo> /help''')
 elif len (sys.argv) == 3:
     command2 = sys.argv[2]
 
-
 command = sys.argv[1]
 
-
-if command == '/help':
-    print('''A lista de comandos é:
-
-/listdir [Lista todos os diretórios e arquivos no diretório principal]
- |------> /listdir -files [Lista todos os arquivos no diretório principal]
-
-/addindex  [Adiciona o diretório principal]
- |------> /addindex <index> [Adiciona o índice indicado]
-
-/removeindex <index> [Remove o índice indicado]
-
-/search <term> [Busca a ocorrência]
-
-/viewindex <path>
-
-/updateindex <path>
-    ''')
+showHelp(command)
 
 path = os.getcwd()
 dirList = os.listdir(path) 
 
-stopwordslist = []
-with open('stopwords.ignore', 'r') as stopwords:
-    for linha in stopwords:
-     word = linha.rstrip()
-     stopwordslist.append(word)
+stopwordslist = generateStopWordsList()
 
 if len (sys.argv) == 2:
     if command == '/listdir':
         print("Arquivos e diretórios em '", path, "' :")  
         print(dirList) 
     elif command == '/addindex':
-        path = os.getcwd()
-        print(path)
-        with open('cache.ignore', 'w') as cache:
-            cache.write(path)
-        print('O diretório principal foi adicionado.')
+        print('Adicione o index utilizando /addindex <path>')
     elif command == '/search':
         print('Efetue a busca utilizando /search <termo>')
     elif command == '/removeindex':
@@ -69,26 +43,8 @@ if len (sys.argv) == 2:
                 print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
             print('\n')
     elif command == '/updateindex':
-        with open('cache.ignore', 'r') as cache:
-            directorydict = []
-            newindexlist = []
-            for line in cache:
-                #rstrip retira caracteres de controle
-                caminho = line.rstrip()
-                directorydict.append(caminho)
-            for index in directorydict:
-                updatetime = os.path.getmtime(index)
-                newindexlist.append(updatetime)
-            with open('indexupdate.ignore', 'r+') as indexupdate:
-                oldindexes = indexupdate.readlines()
-                for i in range(len(newindexlist)):
-                    oldindex = oldindexes[i].rstrip()
-                    if newindexlist[i] != oldindex:
-                        indexupdate.write(str(newindexlist[i]))
-                        print(f'O índice {directorydict[i]} sofreu alterações, portanto foi atualizado.')
-                    else:
-                        indexupdate.write(oldindex)
-            print('Índices atualizados!')
+        directorylist, newindexlist = getOldIndexUpdate()
+        rewriteIndexUpdate(directorylist, newindexlist)
 elif len (sys.argv) == 3: 
     if command == '/listdir' and command2 == '-files':
         print(f'Os arquivos de texto presentes no diretório {path}:')
@@ -96,10 +52,11 @@ elif len (sys.argv) == 3:
             if i.endswith(".txt") == True:
                 print(i)
     elif command == '/addindex' and command2 != None:
-        with open('cache.ignore', 'w') as cache, open('indexupdate.ignore', 'w') as indexupdate:
+        with open('cache.ignore', 'w') as cache, open('indexupdate.ignore', 'r+') as indexupdate:
             if os.path.isfile(command2) == True:
                 cache.write(command2)
                 print(f'O indíce de arquivo {command2} foi adicionado!')
+                indexupdate.write(str(os.path.getmtime(command2)))
             else: 
                 dicio = percorrerArquivos(command2)
                 print(f'O indíce de diretório {command2} foi adicionado!')
@@ -127,7 +84,6 @@ elif len (sys.argv) == 3:
         try:
             with open('cache.ignore', 'r') as cacheread:
                 cacheindexes = cacheread.readlines()
-
             with open('cache.ignore', 'w') as cache:    
                 for linha in cacheindexes:     
                     if linha.startswith(command2) == True:
@@ -138,10 +94,6 @@ elif len (sys.argv) == 3:
                 print(f'O índice {command2} foi removido com sucesso!')
         except:
             print('Houve um erro! Não foi possivel localizar e remover o índice')        
-
-
-
-
         #verificar se é um caminho válido
 
          

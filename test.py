@@ -87,25 +87,29 @@ import os
 # print( 
 #     f'''The file located at the path {path} 
 #     was created at {c_ti} and was last modified at {m_ti}''') 
+def getOldIndexUpdate():
+    with open('cache.ignore', 'r') as cache:
+        directorydict = []
+        newindexlist = []
+        for line in cache:
+        #rstrip retira caracteres de controle
+            caminho = line.rstrip()
+            directorydict.append(caminho)
+        for index in directorydict:
+            updatetime = os.path.getmtime(index)
+            newindexlist.append(str(updatetime))
+        return directorydict, newindexlist
 
-with open('cache.ignore', 'r') as cache:
-            directorydict = []
-            newindexlist = []
-            for line in cache:
-                #rstrip retira caracteres de controle
-                caminho = line.rstrip()
-                directorydict.append(caminho)
-            for index in directorydict:
-                updatetime = os.path.getmtime(index)
-                newindexlist.append(str(updatetime))
-            with open('indexupdate.ignore', 'r+') as indexupdate:
-                oldindexes = indexupdate.readlines()
-                for i in range(len(newindexlist)):
-                    oldindex = oldindexes[i].rstrip()
-                    if newindexlist[i] != oldindex:
-                        indexupdate.write(str(newindexlist[i]))
-                        print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
-                    else:
-                        indexupdate.write(oldindex)
-            print('\n')            
-            print('Índices atualizados!')
+def rewriteIndexUpdate(directorydict, newindexlist):        
+    with open('indexupdate.ignore', 'r+') as indexupdate:
+        oldindexes = indexupdate.readlines()
+        for i in range(len(newindexlist)):
+            oldindex = oldindexes[i].rstrip()
+            if newindexlist[i] != oldindex:
+                indexupdate.write(str(newindexlist[i]))
+                indexupdate.write('\n')
+                print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
+            else:
+                indexupdate.write(oldindex)       
+                indexupdate.write('\n')
+    print('Índices atualizados!')
