@@ -76,14 +76,36 @@ import os
 #     for j in sorted(dicio[chave].items(), key=lambda dicio: dicio[1], reverse=True):
 #         print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
 #     print('\n')
-import time 
-path = r"C:\\Users\Keven\Desktop\arquivos\test.txt"
-ti_c = str(os.path.getctime(path))
-ti_m = os.path.getmtime(path) 
-# c_ti = time.ctime(ti_c) 
-# m_ti = time.ctime(ti_m) 
-print(ti_c, ti_m)
+# import time 
+# path = r"C:\\Users\Keven\Desktop\arquivos\test.txt"
+# ti_c = str(os.path.getctime(path))
+# ti_m = os.path.getmtime(path) 
+# # c_ti = time.ctime(ti_c) 
+# # m_ti = time.ctime(ti_m) 
+# print(ti_c, ti_m)
   
 # print( 
 #     f'''The file located at the path {path} 
 #     was created at {c_ti} and was last modified at {m_ti}''') 
+
+with open('cache.ignore', 'r') as cache:
+            directorydict = []
+            newindexlist = []
+            for line in cache:
+                #rstrip retira caracteres de controle
+                caminho = line.rstrip()
+                directorydict.append(caminho)
+            for index in directorydict:
+                updatetime = os.path.getmtime(index)
+                newindexlist.append(str(updatetime))
+            with open('indexupdate.ignore', 'r+') as indexupdate:
+                oldindexes = indexupdate.readlines()
+                for i in range(len(newindexlist)):
+                    oldindex = oldindexes[i].rstrip()
+                    if newindexlist[i] != oldindex:
+                        indexupdate.write(str(newindexlist[i]))
+                        print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
+                    else:
+                        indexupdate.write(oldindex)
+            print('\n')            
+            print('Índices atualizados!')

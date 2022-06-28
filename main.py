@@ -68,6 +68,27 @@ if len (sys.argv) == 2:
             for j in sorted(viewindex[chave].items(), key=lambda dicio: dicio[1], reverse=True):
                 print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
             print('\n')
+    elif command == '/updateindex':
+        with open('cache.ignore', 'r') as cache:
+            directorydict = []
+            newindexlist = []
+            for line in cache:
+                #rstrip retira caracteres de controle
+                caminho = line.rstrip()
+                directorydict.append(caminho)
+            for index in directorydict:
+                updatetime = os.path.getmtime(index)
+                newindexlist.append(updatetime)
+            with open('indexupdate.ignore', 'r+') as indexupdate:
+                oldindexes = indexupdate.readlines()
+                for i in range(len(newindexlist)):
+                    oldindex = oldindexes[i].rstrip()
+                    if newindexlist[i] != oldindex:
+                        indexupdate.write(str(newindexlist[i]))
+                        print(f'O índice {directorydict[i]} sofreu alterações, portanto foi atualizado.')
+                    else:
+                        indexupdate.write(oldindex)
+            print('Índices atualizados!')
 elif len (sys.argv) == 3: 
     if command == '/listdir' and command2 == '-files':
         print(f'Os arquivos de texto presentes no diretório {path}:')
