@@ -98,15 +98,18 @@ def getOldIndexUpdate():
         return directorydict, newindexlist
 
 def rewriteIndexUpdate(directorydict, newindexlist):        
-    with open('indexupdate.ignore', 'r+') as indexupdate:
-        oldindexes = indexupdate.readlines()
+    with open('indexupdate.ignore', 'r') as indexupdate:
+        oldindex = []
+        indextowrite = []
+        for indexupdatetime in indexupdate:
+            old = indexupdatetime.rstrip()
+            oldindex.append(old)
         for i in range(len(newindexlist)):
-            oldindex = oldindexes[i].rstrip()
-            if newindexlist[i] != oldindex:
-                indexupdate.write(str(newindexlist[i]))
-                indexupdate.write('\n')
+            if newindexlist[i] != oldindex[i]:
+                indextowrite.append(str(newindexlist[i]))
                 print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
             else:
-                indexupdate.write(oldindex)       
-                indexupdate.write('\n')
-    print('Índices atualizados!')
+                indextowrite.append(oldindex[i])
+    with open('indexupdate.ignore', 'w+') as indexupdate:
+        indexupdate.write("\n".join(indextowrite))
+        print('Índices atualizados!')    
