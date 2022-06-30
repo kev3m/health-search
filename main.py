@@ -1,7 +1,6 @@
 import os
 import sys
-from functions import showHelp,percorrerArquivos, indexinvertido, listDir, visualizarIndex, generateStopWordsList, getOldIndexUpdate, rewriteIndexUpdate
-
+from functions import showHelp,percorrerArquivos, indexinvertido, visualizarIndex, generateStopWordsList, getOldIndexUpdate, rewriteIndexUpdate
 
 if len (sys.argv) < 2 :
     print (''' 
@@ -43,8 +42,8 @@ if len (sys.argv) == 2:
                 print(f'Palavra: {j[0]} | Ocorrências: {j[1]}')
             print('\n')
     elif command == '/updateindex':
-        directorylist, newindexlist = getOldIndexUpdate()
-        rewriteIndexUpdate(directorylist, newindexlist)
+        directorylist, modificationsTimeList = getOldIndexUpdate()
+        rewriteIndexUpdate(directorylist, modificationsTimeList)
 elif len (sys.argv) == 3: 
     if command == '/listdir' and command2 == '-files':
         print(f'Os arquivos de texto presentes no diretório {path}:')
@@ -92,6 +91,9 @@ elif len (sys.argv) == 3:
                         cache.write(linha)
             if removedaux == True:
                 print(f'O índice {command2} foi removido com sucesso!')
+                directorylist, modificationsTimeList = getOldIndexUpdate()
+                with open('indexupdate.ignore', 'w+') as indexupdate:
+                    indexupdate.write("\n".join(modificationsTimeList))
         except:
             print('Houve um erro! Não foi possivel localizar e remover o índice')        
         #verificar se é um caminho válido

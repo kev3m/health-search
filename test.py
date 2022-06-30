@@ -89,33 +89,44 @@ import os
 #     was created at {c_ti} and was last modified at {m_ti}''') 
 # def getOldIndexUpdate():
 # def getOldIndexUpdate():
-def getOldIndexUpdate():
-    with open('cache.ignore', 'r') as cache:
-        directorydict = []
-        newindexlist = []
-        for line in cache:
-        #rstrip retira caracteres de controle
-            caminho = line.rstrip()
-            directorydict.append(caminho)
-        for index in directorydict:
-            updatetime = os.path.getmtime(index)
-            newindexlist.append(str(updatetime))
-        return directorydict, newindexlist
+# def getOldIndexUpdate():
+# with open('cache.ignore', 'r') as cache:
+#         directorydict = []
+#         newindexlist = []
+#         for line in cache:
+#         #rstrip retira caracteres de controle
+#             caminho = line.rstrip()
+#             directorydict.append(caminho)
+#         for index in directorydict:
+#             updatetime = os.path.getmtime(index)
+#             newindexlist.append(str(updatetime))
+#         # return directorydict, newindexlist
+# print(directorydict)
+# print(newindexlist)
 
-def rewriteIndexUpdate(directorydict, newindexlist):        
-    with open('indexupdate.ignore', 'r+') as indexupdate:
-        oldindex = []
-        indextowrite = []
-        for indexupdatetime in indexupdate:
-            old = indexupdatetime.rstrip()
-            oldindex.append(old)
-        for i in range(len(newindexlist)):
-            if newindexlist[i] != oldindex[i]:
-                indextowrite.append(str(newindexlist[i]))
-                print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
-            else:
-                indextowrite.append(oldindex[i])
-        for indexwrite in indextowrite:
-            indexupdate.write(indexwrite)
-            indexupdate.write('\n')
-        print('Índices atualizados!')
+# def rewriteIndexUpdate(directorydict, newindexlist):        
+#     with open('indexupdate.ignore', 'r+') as indexupdate:
+#         oldindex = []
+#         indextowrite = []
+#         for indexupdatetime in indexupdate:
+#             old = indexupdatetime.rstrip()
+#             oldindex.append(old)
+#         for i in range(len(newindexlist)):
+#             if newindexlist[i] != oldindex[i]:
+#                 indextowrite.append(str(newindexlist[i]))
+#                 print(f'O índice: {directorydict[i]} sofreu alterações, portanto foi atualizado.')
+#             else:
+#                 indextowrite.append(oldindex[i])
+#         for indexwrite in indextowrite:
+#             indexupdate.write(indexwrite)
+#             indexupdate.write('\n')
+#         print('Índices atualizados!')
+path = 'C:\\Users\Keven\Desktop\\arquivos\ArquivosTeste\\binario.txt'
+try:
+    with open(path, 'r') as f:
+        f.read()
+        print('a')
+except UnicodeDecodeError:
+    print('Error')
+# else:
+#     print('ok')

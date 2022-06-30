@@ -33,7 +33,13 @@ def percorrerArquivos(path):
     for diretorio, subpastas, arquivos in os.walk(path):
         for arquivo in arquivos:
             if arquivo.endswith('.txt') == True:
-                filesdirs.append(os.path.join(diretorio, arquivo))
+                #Não adiciona arquivos que contém caracteres binarios
+                try:
+                    with open(os.path.join(diretorio, arquivo), 'r') as f:
+                        f.read()
+                        filesdirs.append(os.path.join(diretorio, arquivo))
+                except UnicodeDecodeError:
+                    pass
     return filesdirs
 
 def indexinvertido(termo,dictdir):
@@ -52,9 +58,6 @@ def indexinvertido(termo,dictdir):
                     dicio[termo].update({diretorio: counter})
     return dicio
 
-def listDir(path):
-    path = os.listdir()
-    print(path)
 
 def visualizarIndex(diretorio,stopwords):
     viewindexdicio = {}
@@ -84,6 +87,7 @@ def generateStopWordsList():
             stopwordslist.append(word)
     return stopwordslist
 
+
 def getOldIndexUpdate():
     with open('cache.ignore', 'r') as cache:
         directorydict = []
@@ -96,6 +100,8 @@ def getOldIndexUpdate():
             updatetime = os.path.getmtime(index)
             newindexlist.append(str(updatetime))
         return directorydict, newindexlist
+
+
 
 def rewriteIndexUpdate(directorydict, newindexlist):        
     with open('indexupdate.ignore', 'r') as indexupdate:
